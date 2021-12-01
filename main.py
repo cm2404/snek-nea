@@ -1,10 +1,23 @@
-import pygame, sys
+import pygame, sys, random
 from pygame.math import Vector2
+
+class SNAKE:
+    def __init__(self):
+        self.body = [Vector2(5,10),Vector2(6,10),Vector2(7,10)]
+
+    def draw_snake(self):
+        for block in self.body:
+            x_pos = int(block.x * cell_size)
+            y_pos = int(block.y * cell_size)
+            block_rect = pygame.Rect(x_pos,y_pos,cell_size,cell_size)
+            pygame.draw.rect(screen, (39,59,0), block_rect)
+ 
+        
 
 class FOOD:
     def __init__(self):
-        self.x = 5
-        self.y = 4
+        self.x = random.randint(0, cell_number - 1)
+        self.y = random.randint(0, cell_number - 1)
         self.pos = Vector2(self.x, self.y)
 
     def draw_food(self):
@@ -26,7 +39,7 @@ pygame.display.flip()
 clock = pygame.time.Clock()
 
 food = FOOD()
-
+snake = SNAKE()
 #game loop
 while True:
     for event in pygame.event.get():
@@ -36,5 +49,6 @@ while True:
     
     pygame.display.update()
     food.draw_food()
+    snake.draw_snake()
     clock.tick(60)
 
