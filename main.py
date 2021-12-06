@@ -17,6 +17,8 @@ DIRECTION_RIGHT = Vector2(1, 0)
 
 # Colours
 BG_COLOUR = (202,234,3)
+SNEK_COLOUR = (39,59,0)
+FOOD_COLOUR = (255,0,0)
 
 # Board size stuff
 CELL_SIZE = 30 # length and height of cell in pixels
@@ -26,28 +28,42 @@ class Snake:
     def __init__(self):
         self.body = [Vector2(5,10),Vector2(6,10),Vector2(7,10)]
         self.direction =  Vector2(1,0)
+        self.new_block = False
 
     def draw_snake(self):
         for block in self.body:
             x_pos = int(block.x * CELL_SIZE)
             y_pos = int(block.y * CELL_SIZE)
             block_rect = pygame.Rect(x_pos,y_pos,CELL_SIZE,CELL_SIZE)
-            pygame.draw.rect(screen, (39,59,0), block_rect)
+            pygame.draw.rect(screen, SNEK_COLOUR, block_rect)
 
     def snake_move(self):
-        copy_body = self.body[:-1]
-        copy_body.insert(0,copy_body[0] + self.direction)
-        self.body = copy_body[:]
+        if self.new_block == True:
+            copy_body = self.body[:]
+            copy_body.insert(0,copy_body[0] + self.direction)
+            self.body = copy_body[:]
+            self.new_block = False
+        else:
+            copy_body = self.body[:-1]
+            copy_body.insert(0,copy_body[0] + self.direction)
+            self.body = copy_body[:]
+
+
+    def add_block(self):
+        self.new_block = True
 
 class Food:
     def __init__(self):
-        self.x = random.randint(0, CELL_NUMBER - 1)
-        self.y = random.randint(0, CELL_NUMBER - 1)
-        self.pos = Vector2(self.x, self.y)
+        self.randomise()
 
     def draw_food(self):
         food_rect = pygame.Rect(self.pos.x * CELL_SIZE, self.pos.y * CELL_SIZE, CELL_SIZE, CELL_SIZE)
-        pygame.draw.rect(screen,(255,0,0),food_rect)
+        pygame.draw.rect(screen, FOOD_COLOUR,food_rect)
+
+    def randomise(self):
+        self.x = random.randint(0, CELL_NUMBER - 1)
+        self.y = random.randint(0, CELL_NUMBER - 1)
+        self.pos = Vector2(self.x, self.y)
 
 class Main:
     def __init__(self) -> None:
@@ -56,14 +72,17 @@ class Main:
 
     def update(self):
         self.snake.snake_move()
+        self.check_collision()
 
     def draw_elements(self):
           self.food.draw_food()
           self.snake.draw_snake()
 
     def check_collision(self):
-        if self.fruit.pos == self.snake.body[0]:
+        if self.food.pos == self.snake.body[0]:
             print('snack')
+            self.food.randomise()
+            self.snake.add_block()
 
 screen = pygame.display.set_mode((CELL_NUMBER * CELL_SIZE, CELL_NUMBER * CELL_SIZE))
 pygame.display.set_caption('Snek')
