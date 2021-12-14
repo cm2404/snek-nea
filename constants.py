@@ -14,10 +14,16 @@ DIRECTION_LEFT = Vector2(-1, 0)
 DIRECTION_RIGHT = Vector2(1, 0)
 
 # Colours
-BG_COLOUR = (202,234,3)
-SNEK_COLOUR = (39,59,0)
-FOOD_COLOUR = (255,0,0)
+BG_COLOUR = (202, 234, 3)
+SNEK_COLOUR = (39, 59, 0)
+FOOD_COLOUR = (255, 0, 0)
 
 # Board size stuff
-CELL_SIZE = 30 # length and height of cell in pixels
-CELL_NUMBER = 20 # number of cells on each row
+CELL_SIZE = 30  # length and height of cell in pixels
+CELL_NUMBER = 20  # number of cells on each row
+
+# How often to update the game state in ms
+UPDATE_EVENT_INTERVAL = 150
+
+# Print debug output to console (at the moment this only displays FPS)
+DEBUG_OUTPUT = True
