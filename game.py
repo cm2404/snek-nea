@@ -10,7 +10,7 @@ from food import Food
 
 class Game:
     def __init__(self):
-        "Initialise pygame and gameplay related classes"
+        """Initialise pygame and gameplay related classes"""
 
         # Initialise pygame
         pygame.init()
@@ -37,6 +37,7 @@ class Game:
     def update(self):
         self.snake.snake_move()
         self.check_collision()
+        self.check_fail()
 
     def render(self):
         self.screen.fill(BG_COLOUR)
@@ -51,6 +52,21 @@ class Game:
         if self.food.pos == self.snake.body[0]:
             self.food.randomise()
             self.snake.add_block()
+
+    def check_fail(self):
+        if (not 0 <= self.snake.body[0].x < CELL_NUMBER) or (
+            not 0 <= self.snake.body[0].y < CELL_NUMBER
+        ):
+            self.game_over()
+        for block in self.snake.body[1:]:
+            if block == self.snake.body[0]:
+                self.game_over()
+
+    def game_over(self):
+        pygame.quit()
+        sys.exit()
+        # check if snake is outside of screen
+        # check if snake hits itself
 
     def loop(self):
         while True:
