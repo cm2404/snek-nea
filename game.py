@@ -30,6 +30,10 @@ class Game:
         self.snake = Snake()
         self.food = Food()
 
+        # This flag indicates whether
+        # the game should update it's state or not
+        self.running = False
+
         # Add trailing new line to debug FPS output
         if DEBUG_OUTPUT:
             atexit.register(lambda: print())
@@ -94,8 +98,12 @@ class Game:
                     ):
                         self.snake.direction = DIRECTION_RIGHT
 
+                    elif event.key == GAME_START:
+                        # We should now start the game
+                        self.running = True
+
                 # Update game state
-                elif event.type == self.update_event_id:
+                elif event.type == self.update_event_id and self.running:
                     self.update()
 
                 # Application has been requested to close
