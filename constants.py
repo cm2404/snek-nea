@@ -2,7 +2,7 @@ import pygame
 from pygame.math import Vector2
 
 # Control mappings
-GAME_START = set([pygame.K_SPACE])
+CONTROLS_GAME_START = set([pygame.K_SPACE])
 CONTROLS_UP = set([pygame.K_UP, pygame.K_w, pygame.K_i])
 CONTROLS_DOWN = set([pygame.K_DOWN, pygame.K_s, pygame.K_k])
 CONTROLS_LEFT = set([pygame.K_LEFT, pygame.K_a, pygame.K_j])

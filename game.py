@@ -98,7 +98,7 @@ class Game:
                     ):
                         self.snake.direction = DIRECTION_RIGHT
 
-                    elif event.key == GAME_START:
+                    elif event.key in CONTROLS_GAME_START:
                         # We should now start the game
                         self.running = True
 
