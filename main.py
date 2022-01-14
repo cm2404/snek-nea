@@ -2,6 +2,6 @@
 
 from game import Game
 
-# Create the game object and start it's main loop
+# Create the game object and start it's main loop7
 game = Game()
 game.loop()

@@ -7,6 +7,8 @@ CONTROLS_UP = set([pygame.K_UP, pygame.K_w, pygame.K_i])
 CONTROLS_DOWN = set([pygame.K_DOWN, pygame.K_s, pygame.K_k])
 CONTROLS_LEFT = set([pygame.K_LEFT, pygame.K_a, pygame.K_j])
 CONTROLS_RIGHT = set([pygame.K_RIGHT, pygame.K_d, pygame.K_l])
+CONTROLS_CONTINUE = set([pygame.K_y])
+CONTROLS_EXIT = set([pygame.K_n])
 
 # Direction vectors
 DIRECTION_UP = Vector2(0, -1)
