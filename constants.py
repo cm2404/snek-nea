@@ -29,4 +29,4 @@ CELL_NUMBER = 20  # number of cells on each row
 UPDATE_EVENT_INTERVAL = 150
 
 # Print debug output to console (at the moment this only displays FPS)
-DEBUG_OUTPUT = True
+DEBUG_OUTPUT = False

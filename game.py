@@ -17,6 +17,7 @@ class Game:
 
         # Initialise pygame
         pygame.init()
+        pygame.mixer.pre_init(44100, -16, 2, 512)
 
         # Display
         self.screen = pygame.display.set_mode(
@@ -25,16 +26,21 @@ class Game:
         pygame.display.set_caption("Snek")
 
         # Timing stuff
-        self.clock = pygame.time.Clock()
-        self.update_event_id = pygame.USEREVENT
+        self.clock = pygame.time.Clock()  # calls Pygames built in clock function
+        self.update_event_id = (
+            pygame.USEREVENT
+        )  # Storing a reference to the Pygame user configurable timer ID
         pygame.time.set_timer(self.update_event_id, UPDATE_EVENT_INTERVAL)
 
         # Text
-        self.game_font = pygame.font.Font("Minecrafter.Reg.ttf", 40)
+        self.game_font = pygame.font.Font(
+            "Minecrafter.Reg.ttf", 40
+        )  # defines what font to use and which size
 
         # Gameplay related code
-        self.snake = Snake()
-        self.food = Food()
+        self.snake = Snake()  # assigns a varible to the class Snake()
+        self.food = Food()  # assigns a variable to the class Food()
+        self.score = 0  # player score
 
         # Add trailing new line to debug FPS output
         if DEBUG_OUTPUT:
@@ -57,8 +63,10 @@ class Game:
 
     def check_collision(self):
         if self.food.pos == self.snake.body[0]:
+            self.score += 1  # food collected, increase score by 1
             self.food.randomise()
             self.snake.add_block()
+            self.snake.play_snake_sound()
 
     def check_fail(self):
         if (not 0 <= self.snake.body[0].x < CELL_NUMBER) or (
@@ -72,9 +80,14 @@ class Game:
     def game_over(self):
         self.snake.reset()
 
+        print(self.score)
+        with open("scores.txt", "w", encoding="utf-8") as f:
+            f.write("Your score is: " + str(self.score))
+
+        self.score = 0
+
     def draw_score(self):
-        score_text = str(len(self.snake.body) - 3)
-        score_surface = self.game_font.render(score_text, True, (56, 74, 12))
+        score_surface = self.game_font.render(str(self.score), True, (56, 74, 12))
         score_x = int(CELL_SIZE * CELL_NUMBER - 60)
         score_y = int(CELL_SIZE * CELL_NUMBER - 40)
         score_rect = score_surface.get_rect()
