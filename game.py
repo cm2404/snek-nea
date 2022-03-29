@@ -69,17 +69,19 @@ class Game:
             self.snake.play_snake_sound()
 
     def check_fail(self):
+        # check if the snake has hit a wall
         if (not 0 <= self.snake.body[0].x < CELL_NUMBER) or (
             not 0 <= self.snake.body[0].y < CELL_NUMBER
         ):
             self.game_over()
+
+        # check if snake has itself
         for block in self.snake.body[1:]:
             if block == self.snake.body[0]:
                 self.game_over()
 
     def game_over(self):
         self.snake.reset()
-
         print(self.score)
         with open("scores.txt", "w", encoding="utf-8") as f:
             f.write("Your score is: " + str(self.score))
